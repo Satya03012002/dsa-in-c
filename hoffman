@@ -1,0 +1,268 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_TREE_HT 50
+
+int arh[MAX_TREE_HT];
+
+int arrsize = -1;
+
+struct storeval{
+    char letter;
+    int arr[8];
+};
+
+
+
+int Left(int i){
+    return 2*i+1;
+}
+int Right(int i){
+    return 2*i+2;
+}
+int parent(int i){
+    return i/2;
+}
+
+struct treeNode{
+    char letter;
+    int freq;
+    struct treeNode* left;
+    struct treeNode* right;
+};
+
+struct treeRoot{
+    int size;
+    int finalSize;
+    struct treeNode** arr;
+    struct treeNode root;
+};
+
+struct treeNode *root =  NULL;
+
+
+struct treeRoot* huff = NULL;
+  
+  
+void swap(int least, int i){
+    
+     struct treeNode* temp = (struct treeNode*)malloc(sizeof(struct treeNode));
+      temp = huff->arr[i];
+     huff->arr[i] = huff->arr[least];
+     huff->arr[least] = temp;
+    
+    
+}
+
+void MinHeapify(int i , int len){
+    
+    
+  
+    
+    
+    int least = i;
+    int l = Left(i);
+    int r = Right(i);
+    
+    if( l < len && huff->arr[l]->freq < huff->arr[least]->freq){
+        least = l;
+        
+    }
+    if(r < len && huff->arr[r]->freq <  huff->arr[least]->freq){
+        least = r;
+        
+    }
+    
+    if(least != i){
+        swap( least, i);
+        MinHeapify( least, len);
+    }else{
+         return;
+    }
+    
+}
+
+void BuildMinHeap(int len){
+    
+     for(int i = len/2; i >= 0; i--){
+        
+       
+        MinHeapify( i, len);
+    }
+    printf("\n");
+    return ;
+    
+}
+
+
+void HeapSort( int len){
+         
+        swap( 0, len-1);
+        len--;
+        MinHeapify( 0, len);
+        
+    
+}
+
+void MinHeapInsert( struct treeNode*node, int size){
+    if(size == 0){
+        
+        return;
+    }else{
+        int i = size;
+        printf("node->freq %d\n", node->freq);
+        huff->arr[i] = node;
+        
+          printf("huff->arr[%d]->freq %d\n",i, node->freq);
+        
+        
+        while(i > 0){
+            
+            if(huff->arr[i]< huff->arr[parent(i)]){
+                swap( i, parent(i));
+            }
+            i = i/2;
+        }
+    }
+    
+}
+
+int lettersize = 0;
+void printarr(int top,struct storeval arraylet[], char c ){
+    arraylet[lettersize].letter = c;
+    for(int i = 0; i < top; i++){
+        printf("%d",arh[i]);
+        arraylet[lettersize].arr[i] = i;
+        
+    }
+    printf("\n");
+    lettersize++;
+}
+
+
+
+void printcode(struct treeNode *root ,int top, struct storeval arraylet[]){
+    
+     if(root->left){
+        arh[top] = 0;
+         printcode(root->left, top+1,arraylet);
+     }
+     if(root->right){
+         arh[top] = 1;
+         printcode(root->right, top+1,arraylet);
+     }
+     if(root->left == NULL && root->right == NULL){
+         printf("  %c -> ", root->letter);
+        
+         
+         printarr(top, arraylet, root->letter );
+     }
+}
+
+
+
+void Huffman(char ar[], int freq[], int size){
+    
+    struct storeval arraylet[size];
+    
+    huff = (struct treeRoot*)malloc(sizeof(struct treeRoot*));
+    huff->arr = (struct  treeNode**)malloc(sizeof(struct  treeNode*)*size);
+    
+    for(int i = 0; i < size; i++){
+         struct treeNode* node = (struct treeNode*)malloc(sizeof(struct treeNode));
+         node->letter = ar[i];
+         node->freq = freq[i];
+         node->left = NULL;
+         node->right = NULL;
+          huff->arr[i] = node;
+         
+    }
+    
+    for(int i = 0; i < size; i++){
+        printf("letter -> %c, freq-> %d\n", huff->arr[i]->letter, huff->arr[i]->freq);
+    }
+    
+    BuildMinHeap( size);
+    
+    while(size > 1){
+        struct treeNode* temp = (struct treeNode*)malloc(sizeof(struct treeNode));
+         struct treeNode* l = huff->arr[0];
+          HeapSort( size);
+         size--;
+         printf("l->freq %d\n",l->freq);
+         
+         struct treeNode* r = huff->arr[0];
+          HeapSort( size);
+         size--;
+         printf("r->freq %d\n",r->freq);
+         
+         printf("size -> %d\n",size);
+         
+         temp->letter = '*';
+         temp->freq = l->freq + r->freq;
+         
+         temp->left = l;
+         temp->right= r;
+         
+          MinHeapInsert(temp, size); 
+         
+         size++;
+         
+         root = temp;
+         
+        
+    }
+    
+    printf("\nfinalval -> %d\n", root->freq);
+    
+    int top = 0;
+    
+    printcode(root, top, arraylet);
+    
+    
+}
+
+
+int main()
+{
+    
+    char arr[] = {'A', 'B', 'C', 'D'};
+  int freq[] = {5, 1, 6, 3};
+
+  int size = strlen(arr);
+
+  printf(" Char | Huffman code ");
+  printf("\n--------------------\n");
+
+  Huffman(arr, freq, size);
+  
+  
+  
+    FILE *ptr = NULL;
+    ptr = fopen("satya.txt", "r");
+    if(!ptr){
+      printf("\n Unable to open ");
+      return -1;
+    }esle{
+        do
+    {
+        // Taking input single character at a time
+        char c = fgetc(ptr);
+ 
+        // Checking for end of file
+        if (feof(ptr))
+            break ;
+ 
+        printf("%c", c);
+    }  while(1);
+ 
+    fclose(ptr);
+            
+        }
+    }
+    
+ 
+  
+    
+    return 0;
+}
