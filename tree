@@ -1,3 +1,62 @@
+
+
+
+void deque(){
+    if(front == -1){
+        printf("arr is already empty");
+        return ;
+    }
+    else if(front == rear){
+        
+        front = -1;
+        rear = -1;
+        return ;
+    }
+    else{
+       
+        
+        front = (front+1)%max_size;
+        
+        return;
+        
+        
+        
+    }
+    
+    
+}
+
+void inorder(struct Node* root){
+    if(root == NULL){
+        return;
+    }
+    
+   
+    inorder(root->leftLink);
+     printf("%d ->", root->val);
+    inorder(root->rightLink);
+}
+void preorder(struct Node* root){
+    if(root == NULL){
+        return;
+    }
+    
+    printf("%d->", root->val);
+    preorder(root->leftLink);
+    preorder(root->rightLink);
+}
+void postorder(struct Node* root){
+    if(root == NULL){
+        return;
+    }
+    
+   
+    postorder(root->leftLink);
+    postorder(root->rightLink);
+     printf("%d->", root->val);
+}
+
+
 void bfs(struct Node* root){
     
     if(root == NULL){
