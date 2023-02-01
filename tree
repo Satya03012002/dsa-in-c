@@ -1,5 +1,28 @@
 
+struct Node* arr[max_size];
+int front = -1;
+int rear = -1;
 
+
+void enqueue(struct Node* address){ // address of a node that we want to put in queue
+    
+    if(front == -1){
+        front++;
+        rear++;
+        arr[rear] = address;
+        return;
+    }
+    else if(front == (rear+1)%max_size){
+        printf("queue is filled");
+        return;
+        
+    }
+    else{
+        rear = (rear+1)%max_size;
+        arr[rear]= address;
+    }
+    
+}
 
 void deque(){
     if(front == -1){
