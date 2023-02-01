@@ -1,4 +1,28 @@
-
+void bfs(struct Node* root){
+    
+    if(root == NULL){
+        return;
+    }
+    enqueue(root);
+    while( front != -1){
+        struct Node* current = arr[front];
+        printf("value - > %d", current->val);
+        
+        if(current->leftLink != NULL){
+            enqueue(current->leftLink);
+        }
+        if(current->rightLink != NULL){
+            enqueue(current->rightLink);
+        }
+        deque();
+        
+        
+        
+    }
+   
+   
+   
+}
 
 int isBSU(struct Node* root, int min, int max){
     
