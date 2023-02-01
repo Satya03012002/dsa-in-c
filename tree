@@ -1,4 +1,13 @@
 
+int height(struct Node* root){
+    if(root == NULL){
+        return -1;
+    }
+     int leftHeight = height(root->leftLink);
+     int rightHeight = height(root->rightLink);
+     int h = ((leftHeight > rightHeight) ? leftHeight:rightHeight)+1;
+     return h ;
+}
 struct Node* arr[max_size];
 int front = -1;
 int rear = -1;
