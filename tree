@@ -1,3 +1,50 @@
+
+
+#include <stdio.h>
+#include<stdlib.h>
+#define max_size 10
+#define true 1
+#define false 0
+
+
+
+
+
+struct Node{
+    int val;
+    struct Node* leftLink;
+    struct Node* rightLink;
+};
+
+
+
+ struct Node* insert(int val, struct Node* root){
+    
+    
+    if(root == NULL){
+        struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+       
+        node->val = val;
+        root = node; // here root is a pointer which contains address of a node
+        return root;
+        
+    }
+    else if(root->val == val){
+        printf("this element is already inserted");
+        return root;
+    }
+    else if(val > root->val){
+        root->rightLink = insert( val, root->rightLink);
+        
+    }
+    else{
+        root->leftLink = insert(val, root->leftLink);
+    }
+    
+    return root;
+  
+}
+
 int  search(int val, struct Node* root){
     
     
