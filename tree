@@ -1,0 +1,43 @@
+int main()
+{
+    struct Node* root = NULL; //basically it is a pointer which contains the address of a node 
+    // make sure we should not disturb the address of the pointer
+    
+     root = insert(51, root);
+     
+      root = insert(57, root);
+        root = insert(52, root);
+        root =  insert(53, root);
+      root = insert(2, root);
+      root =  insert(89, root);
+        root = insert(11, root);
+        root =  insert(12, root);
+      root = insert(34, root);
+       root = insert(4, root);
+        root = insert(23, root);
+        
+       
+       int minn = min(root);
+       printf("min -> %d\n", minn);
+       
+       int hei = height(root);
+       printf("height %d\n", hei);
+   
+       bfs(root);
+       printf("\n");
+       inorder(root);
+         printf("\n");
+       preorder(root);
+         printf("\n");
+       postorder(root);
+       
+       int p = isBST(root);
+       printf("\np -> %d\n",p);
+       
+       struct Node* rootu = del(root, 89);
+       rootu = del(root, 34);
+        inorder(root);
+         printf("\n");
+
+    return 0;
+}
