@@ -1,4 +1,18 @@
-
+int max(struct Node* root){
+    
+    
+    if(root == NULL){
+        printf("no elelment is present");
+        return -1;
+    }
+    if(root->rightLink == NULL){
+        return root->val;
+    }
+    else{
+        return min(root->rightLink);
+        
+    }
+}
 int height(struct Node* root){
     if(root == NULL){
         return -1;
