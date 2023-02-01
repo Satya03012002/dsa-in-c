@@ -1,4 +1,25 @@
-
+int  search(int val, struct Node* root){
+    
+    
+    if(root == NULL){
+       
+        return -1;
+        
+    }
+    else if(root->val == val){
+       
+        return 0;
+    }
+    else if(val > root->val){
+       return search( val, root->rightLink);
+        
+    }
+    else{
+       return search(val, root->leftLink);
+    }
+    
+   
+}
 int i = 0;
 int min(struct Node* root){
     
