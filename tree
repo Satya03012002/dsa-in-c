@@ -1,3 +1,26 @@
+
+
+int isBSU(struct Node* root, int min, int max){
+    
+    if(root == NULL){
+        return true;
+    }
+    
+    else if(root->val < min ||root->val > max ){
+        return false;
+    }
+    else{
+        return( (isBSU(root->leftLink, min, root->val-1)) && (isBSU(root->rightLink, root->val +1, max)));
+    }
+}
+
+
+int isBST(struct Node* root){
+    int min = -1234;
+    int max = 1234;
+    return isBSU(root, min,max);
+}
+
 struct Node* minNodeAdd(struct Node* root){// give add of min node
     
     
