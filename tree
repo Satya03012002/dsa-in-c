@@ -1,3 +1,58 @@
+
+struct Node* del(struct Node* root, int val){
+    if(root == NULL){
+        printf("tree is already empty");
+        return NULL;
+    }
+    else if( root->val > val){
+        root->leftLink = del(root->leftLink, val);
+        
+    }
+    else if(root->val < val){
+        root->rightLink = del(root->rightLink, val);
+    }
+    else{
+        // in case of leaf Node
+        if(root->leftLink == NULL && root->rightLink == NULL){
+            struct Node* tempnode = root;
+            root = NULL;
+            free(tempnode);
+            return root;
+            
+            
+        }
+        // in case of one child
+        // if only left node is present
+        else if(root->rightLink == NULL){
+            struct Node* tempnode = root;
+            root = root->leftLink;
+            free(tempnode);
+            
+            
+        }
+        // if only right child is presenrt 
+        else if(root->leftLink == NULL){
+             struct Node* tempnode = root;
+            root = root->rightLink;
+            free(tempnode);
+            
+            
+        }
+        
+        // in case of two child is present
+        // min min val in the right subtree
+        else{
+            struct Node* minValNode = minNodeAdd(root->rightLink);
+            root->val = minValNode->val;
+            root->rightLink = del(root->rightLink,minValNode->val );
+            
+        }
+    }
+    
+    return root;
+}
+
+
 int main()
 {
     struct Node* root = NULL; //basically it is a pointer which contains the address of a node 
