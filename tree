@@ -1,3 +1,21 @@
+
+int i = 0;
+int min(struct Node* root){
+    
+    
+    if(root == NULL){
+        printf("no elelment is present");
+        return -1;
+    }
+    if(root->leftLink == NULL){
+        return root->val;
+    }
+    else{
+        return min(root->leftLink);
+        
+    }
+}
+
 int max(struct Node* root){
     
     
