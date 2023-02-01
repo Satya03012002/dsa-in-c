@@ -1,4 +1,18 @@
-
+struct Node* minNodeAdd(struct Node* root){// give add of min node
+    
+    
+    if(root == NULL){
+        printf("no elelment is present");
+        return NULL;
+    }
+    if(root->leftLink == NULL){
+        return root;
+    }
+    else{
+        return minNodeAdd(root->leftLink);
+        
+    }
+}
 struct Node* del(struct Node* root, int val){
     if(root == NULL){
         printf("tree is already empty");
