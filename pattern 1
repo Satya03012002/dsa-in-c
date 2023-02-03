@@ -1,0 +1,43 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+C#, VB, Perl, Swift, Prolog, Javascript, Pascal, HTML, CSS, JS
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************
+output - 5 4 3 2 1 2 3 4 5
+*******************************************************************************/
+#include <stdio.h>
+void p(int);
+int a[9];
+void printarr(int a[],int size){
+    for(int i = 0;i < size;i++){
+        printf("%d",a[i]);
+    }
+    printf("\n");
+}
+
+void p(int i){
+   
+    
+    if(i == 2){
+        printf("%d\n",i-1);
+        return ;
+    }
+   
+    
+    printf("%d\n",i-1);
+    
+    i = i-1;
+    p(i);
+     // here no need to backtrack because yaha par i stack change hone k baad wo value bhi change ho jata hai
+    printf("%d\n",i);
+   
+}
+
+int main()
+{
+    p(6);
+
+   
