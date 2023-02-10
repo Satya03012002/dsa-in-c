@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int main()
+{
+    
+    int i,j,k,divisor,dividend;
+    printf("enter the two no.\n");
+    scanf("%d %d",&i,&j);
+    if(i>j)
+    {
+        divisor=j;
+        dividend=i;
+    }
+    else
+    {
+        
+        divisor=i;
+        dividend=j;
+    }
+    printf("divisor %d\n",divisor);
+    printf("dividend %d\n",dividend);
+    while((dividend%divisor)!=0)
+    {
+    k=dividend%divisor;
+    divisor=k;
+    }
+    printf("%d",divisor);
+    
+
+    return 0;
+}
