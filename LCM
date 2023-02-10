@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main()
+{
+    int i,j,k,max;
+    printf("enter the no.\n");
+    scanf("%d %d",&j,&k);
+    max = (j>k) ? j:k;
+    while(1)
+    {
+        if((max%j)==0 && (max%k)==0)
+        {
+        printf("the L.C.M of %d and %d is %d",j,k,max);
+        break;
+        }
+        max++;
+    }
+    // lcm= j*k/gcd
+    
+  
+
+    return 0;
+}
