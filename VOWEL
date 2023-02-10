@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main()
+{
+   char sp;
+   char a,e,i,o,u;
+   printf("enter the alphabet\n");
+   scanf("%c",&sp);
+
+if(sp == 'a'||sp == 'i'||sp == 'o'||sp == 'u'||sp == 'e'||sp == 'A'||sp == 'I'||sp == 'O'||sp == 'U'||sp == 'E') // when we evaluate to alphabet use '', in case of integer not req
+{
+    printf("%c is vowel",sp);
+    
+}
+else
+{
+    printf("%c is consonent",sp);
+}
+   
+
+    return 0;
+}
