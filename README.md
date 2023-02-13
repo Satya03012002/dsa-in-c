@@ -1,1 +1,1 @@
-# dsa-in-c
+# datastructure-in-c
