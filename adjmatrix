@@ -1,0 +1,351 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Graph{
+    int vertex;
+    int edge;
+    int **arr;
+};
+struct Graph* adjMatrix = NULL;
+
+void print(){
+    for(int i = 0; i < adjMatrix->vertex; i++){
+        for(int j = 0; j < adjMatrix->vertex; j++){
+            printf("%d ",adjMatrix->arr[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+    return;
+}
+
+
+struct Graph* CreateGraph(){
+    
+     adjMatrix = (struct Graph*)malloc(sizeof(struct Graph));
+   printf("enter the no. of vertex\n");
+   scanf("%d",&adjMatrix->vertex);
+   printf("adjMatrix->vertex = %d\n", adjMatrix->vertex);
+   
+   printf("enter the no. of edge\n");
+   scanf("%d",&adjMatrix->edge);
+   printf("adjMatrix->edge = %d\n", adjMatrix->edge);
+   
+   (adjMatrix->arr) = (int**)malloc(((adjMatrix->vertex))*sizeof(int*));
+   
+  for(int i = 0; i < adjMatrix->vertex; i++){
+      adjMatrix->arr[i] = (int*)malloc(((adjMatrix->vertex))*sizeof(int));
+  }
+  for(int j = 0; j < adjMatrix->vertex; j++){
+       for(int k = 0; k < adjMatrix->vertex; k++){
+           
+           adjMatrix->arr[j][k] = 0;
+      
+        }
+    }
+    
+    for(int i = 0; i < adjMatrix->edge; i++){
+        printf("enter the startVertex and endVertex\n");
+        int startVertex;
+        int endVertex;
+        scanf("%d%d",&startVertex,&endVertex);
+         adjMatrix->arr[startVertex][endVertex] = 1;
+         adjMatrix->arr[endVertex][startVertex] = 1;
+    }
+   
+   print();
+  
+  return adjMatrix;
+    
+    
+    
+}
+
+void search(){
+    int vertexNo;
+    printf("enter the no. of vertex you want to search according to array\n");
+    scanf("%d",&vertexNo);
+    
+    for(int i = 0; i < adjMatrix->vertex; i++){
+        if(adjMatrix->arr[vertexNo][i] == 1){
+             printf("%d->",i);
+        }
+       
+    }
+       printf("\n");
+    
+    
+}
+
+
+
+
+void insertEdge(){
+    int noOfEdge;
+    int startVertex;
+    int endVertex;
+    printf("enter no of edge you want to insert\n");
+    scanf("%d",&noOfEdge);
+    for(int i = 0; i < noOfEdge; i++){
+        printf("enter startVertex and endVertex\n");
+    scanf("%d%d",&startVertex,&endVertex);
+    
+    if((startVertex < adjMatrix->vertex && startVertex >= 0) && (endVertex < adjMatrix->vertex && endVertex >= 0)){
+        adjMatrix->arr[startVertex][endVertex] = 1;
+        adjMatrix->arr[endVertex][startVertex] = 1;
+    } 
+    }
+    print();
+    
+    return;
+   
+}
+void insertNode(){
+    
+    
+    adjMatrix->vertex++;
+   adjMatrix->arr = (int**)realloc( adjMatrix->arr,(adjMatrix->vertex)*sizeof(int*));
+   
+  for(int i = 0; i < adjMatrix->vertex; i++){
+      adjMatrix->arr[i] = (int*)realloc( adjMatrix->arr[i],(adjMatrix->vertex)*sizeof(int));
+  }
+  for(int j = adjMatrix->vertex-1; j < adjMatrix->vertex; j++){
+       for(int k = 0; k < adjMatrix->vertex; k++){
+           adjMatrix->arr[j][k] = 0;
+           adjMatrix->arr[k][j] = 0;
+      
+        }
+    }
+    int adjvertex;
+    printf("enter the no. of edges of new node\n");
+    scanf("%d",&adjvertex);
+    
+      for(int i = 0; i < adjvertex; i++){
+       insertEdge();
+    }
+   
+    print();
+    
+    return;
+}
+
+void deleteNode(){
+    
+     int vertexNo;
+    printf("enter the no. of vertex you want to delete according to array\n");
+    scanf("%d",&vertexNo);
+    
+    // adjMatrix->arr[vertexNo] = NULL;
+    
+    for(int i = 0; i < adjMatrix->vertex; i++){
+        adjMatrix->arr[i][vertexNo] = 0;
+        adjMatrix->arr[vertexNo][i] = 0;
+    }
+    print();
+}
+
+
+int* arrq = NULL;
+int front = -1;
+int rear = -1;
+
+
+void enqueue(int val){ // address of a node that we want to put in queue
+    
+    
+    
+    if(front == -1){
+        front++;
+        rear++;
+        arrq[rear] = val;
+        return;
+    }
+    else if(front == (rear+1)%adjMatrix->vertex){
+        printf("queue is filled");
+        return;
+        
+    }
+    else{
+        rear = (rear+1)%adjMatrix->vertex;
+        arrq[rear]= val;
+    }
+    return;
+    
+}
+
+void deque(){
+    if(front == -1){
+        printf("arr is already empty");
+        return ;
+    }
+    else if(front == rear){
+        
+        front = -1;
+        rear = -1;
+        return ;
+    }
+    else{
+       
+        
+        front = (front+1)%adjMatrix->vertex;
+        
+        return;
+        
+        
+        
+    }
+    
+    
+}
+
+
+
+int bfs(){
+    arrq = (int*)malloc(adjMatrix->vertex*sizeof(int));
+  
+    int visited[adjMatrix->vertex];
+     for(int i = 0; i < adjMatrix->vertex; i++){
+         visited[i] = 0;
+     }
+     printf("\n");
+    
+    int verno;
+    printf("enter the vertexno\n");
+    scanf("%d",&verno);
+    
+    
+    enqueue(verno);
+    visited[verno] = 1;
+    printf("\n");
+   
+        printf("\n");
+    while( front != -1){
+        
+        int curr = arrq[front];
+        printf("%d->",curr);
+        
+       
+        
+      
+        
+        for(int i = 0; i < adjMatrix->vertex; i++){
+           
+            if(adjMatrix->arr[curr][i] == 1 ){
+              
+                if(visited[i] == 0){
+                    
+                    enqueue(i);
+                    visited[i] = 1;
+                
+                    
+                }
+                
+            }
+        }
+        
+        
+        deque();
+        
+                      printf("\n");
+        
+       
+        
+        
+        
+    }
+    
+}
+void dfs(int verno, int visited[]){
+    printf("%d->",verno);
+    visited[verno] = 1;
+    
+    for(int i = 0; i < adjMatrix->vertex; i++){
+        if(adjMatrix->arr[verno][i] == 1 ){
+            if(visited[i] != 1){
+                
+                dfs(i, visited);
+            }
+            // else{
+            //     return;
+            // }
+        }
+    }
+    
+    
+}
+
+void dfsfunc(){
+  int visited[adjMatrix->vertex];
+     for(int i = 0; i < adjMatrix->vertex; i++){
+         visited[i] = 0;
+     }
+     printf("\n");
+    
+    int verno;
+    printf("enter the vertexno\n");
+    scanf("%d",&verno);
+     dfs(verno, visited);
+    return;
+    
+}
+
+
+
+int main()
+{   
+    printf("create Graph\n");
+    adjMatrix = CreateGraph();
+    
+   printf("\n1. Search a node.\n2. Insert a node in the graph.\n3. Insert an edge in the graph\n4. Delete a node from the graph\n5. Apply DFS on the graph\n6. Apply BFS on the graph ");
+   
+   int n;
+   printf("enter the value to perform operation\n");
+   scanf("%d",&n);
+   
+   int val;
+   switch(n){
+       case 1:
+       search();
+       break;
+       
+       case 2:
+       insertNode();
+       break;
+       
+       case 3:
+       insertEdge();
+       break;
+       
+       case 4:
+       deleteNode();
+       break;
+       
+       case 5:
+       dfsfunc();
+       break;
+       
+       case 6:
+       bfs(); 
+       
+       default :
+       printf("you entered the wrong no");
+       
+       
+   }
+   
+     
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
