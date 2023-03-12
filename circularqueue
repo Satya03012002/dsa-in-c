@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include<stdlib.h>
+#define max_size 3
+
+int arr[max_size];
+int rear = -1;
+int front = -1;
+
+void insert(int val){
+    if(front == -1){
+        front++;
+        rear++;
+        arr[rear] = val;
+       
+        return;
+        
+    }
+    else if(front == ((rear+1)%max_size)){
+        printf("size of queue is full\n");
+        return;
+    }
+    else{
+        rear = (rear+1)%max_size;
+        arr[rear] = val;
+        // printf("insert %d\n", arr[rear]);
+        return;
+    }
+    
+}
+
+int del(){
+    if(front == -1){
+        printf("queue is already empty");
+        return -1;
+    }
+    if(front == rear){
+        int val = arr[front];
+        // printf("del %d\n", arr[front]);
+        rear = -1;
+        front = -1;
+        return val;
+    }
+    else{
+         int val = arr[front];
+         printf("del %d\n", arr[front]);
+         front = (front+1)%max_size;
+         return val;
+        
+    }
+    
+}
+
+int main()
+{
+    insert(50);
+     insert(51);
+      insert(52);
+      insert(53);
+        insert(54);
+         insert(55);
+         
+         for(int i = 0; i < max_size; i++){
+             printf("arr[%d] - > %d\n", i, arr[i]);
+         }
+         
+        int p = del();
+        printf("%d\n",p);
+
+    return 0;
+}
