@@ -1,0 +1,433 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+C#, VB, Perl, Swift, Prolog, Javascript, Pascal, HTML, CSS, JS
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Node{
+    int val;
+    struct Node* nextLink ;
+};
+
+struct Graph{
+    int vertex;
+    int edge;
+   struct Node **arr ;
+};
+
+struct Graph* adjList = NULL;
+
+
+void display(){
+  for(int i = 0; &adjList->arr[i] != NULL &&  i < (adjList->vertex); i++){
+    struct Node* curr = adjList->arr[i];
+    
+         printf("[%d]->", i);
+    
+   
+    
+    while(curr!= NULL){
+        printf("%d->", curr->val);
+        curr = curr->nextLink;
+    }
+    
+    
+    printf("\n");
+  }
+ 
+}
+
+
+void CreateGraph(){
+    adjList = (struct Graph*)malloc(sizeof(struct Graph*));
+    if (!adjList) {
+    printf("memory error");
+    return;
+}
+    printf("enter the no. of vertex\n");
+   scanf("%d",&adjList->vertex);
+  
+   
+   printf("enter the no. of edge\n");
+   scanf("%d",&adjList->edge);
+   
+   
+   adjList->arr = (struct Node**)malloc(sizeof(struct Node*)*adjList->vertex);
+   
+   for(int i = 0; i < adjList->vertex; i++){
+       adjList->arr[i] = NULL;
+   }
+   
+       
+        int startVertex;
+        int endVertex;
+       for(int i = 0; i <adjList->edge; i++){
+           struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+           struct Node* nod = (struct Node*)malloc(sizeof(struct Node));
+          printf("\nenter the startVertex and endVertex\n");
+        scanf("%d%d",&startVertex,&endVertex);
+        
+   
+        node->val = endVertex;
+        node->nextLink = NULL;
+        
+        nod->val = startVertex;
+        nod->nextLink = NULL;
+        
+        if(adjList->arr[startVertex] == NULL){
+            
+           
+          
+            adjList->arr[startVertex] = node;
+           
+         
+            
+        }
+        else{
+            
+            
+            node->nextLink = adjList->arr[startVertex];
+            adjList->arr[startVertex] = node;
+             
+           
+        }
+        if(adjList->arr[endVertex] == NULL){
+          
+            adjList->arr[endVertex] = nod;
+           
+         
+            
+        }
+        else{
+            
+            
+            nod->nextLink = adjList->arr[endVertex];
+            adjList->arr[endVertex] = nod;
+           
+        }
+        
+        
+       }
+           display();
+     return;   
+    
+}
+
+
+
+void search(){
+    int vertexNo;
+    printf("enter vertex no\n");
+    scanf("%d",&vertexNo);
+    struct Node* curr = adjList->arr[vertexNo];
+     while(curr != NULL){
+        printf("%d->", curr->val);
+        curr = curr->nextLink;
+    }
+    
+    printf("\n");
+}
+void deleteByValue( struct Node* address  , int value){
+    if(address ==  NULL){
+        printf("no element id present for delete");
+    }
+    
+    else{
+       
+        struct Node* current = address;
+        struct Node* prev = NULL;
+        while(current->val != value && current->nextLink != NULL){
+           
+             prev = current;
+            current = current->nextLink;
+        }
+        if(current->nextLink == NULL){ // last element
+            //printf("last element is deleted\n");
+            prev->nextLink = NULL;
+            return ;
+        }
+        prev->nextLink = current->nextLink;
+    }
+    display();
+    return;
+}
+
+
+void deleteNode(){
+    display();
+     int vertexNo;
+    printf("enter the  of vertex no. you want to delete according to array\n");
+    scanf("%d",&vertexNo);
+   struct Node* curr = adjList->arr[vertexNo];
+     while(curr != NULL){
+       
+        int value = curr->val;
+       
+        deleteByValue(adjList->arr[value], vertexNo);
+        curr = curr->nextLink;
+    }
+    
+    
+    adjList->arr[vertexNo] = NULL;
+    display();
+    return;
+    
+}
+
+void insertEdge(){
+    int startVertex;
+    int endVertex;
+    printf("enter startVertex and endVertex\n");
+    scanf("%d%d",&startVertex,&endVertex);
+    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+     node->val = endVertex;
+        node->nextLink = NULL;
+        struct Node* nod = (struct Node*)malloc(sizeof(struct Node));
+     nod->val = startVertex;
+        nod->nextLink = NULL;
+     if(adjList->arr[startVertex] == NULL){
+          
+            adjList->arr[startVertex] = node;
+          return;
+         
+            
+        }
+        else{
+            
+            
+            node->nextLink = adjList->arr[startVertex];
+            adjList->arr[startVertex] = node;
+          
+        }
+        if(adjList->arr[endVertex] == NULL){
+          
+            adjList->arr[endVertex] = nod;
+          return;
+         
+            
+        }
+        else{
+            
+            
+            nod->nextLink = adjList->arr[endVertex];
+            adjList->arr[endVertex] = nod;
+          
+        }
+      display();
+    return;
+}
+
+
+void insertNode(){
+    
+    
+    adjList->vertex++;
+    adjList->arr = (struct Node**)realloc( adjList->arr,(adjList->vertex)*sizeof(int*));
+   
+ 
+    int adjvertex;
+    printf("enter the no. of edges of new node\n");
+    scanf("%d",&adjvertex);
+    
+      for(int i = 0; i < adjvertex; i++){
+       insertEdge();
+         
+    }
+   
+    display();
+    
+    return;
+}
+
+
+
+int* arrq = NULL;
+int front = -1;
+int rear = -1;
+
+
+void enqueue(int val){ // address of a node that we want to put in queue
+    
+    
+    
+    if(front == -1){
+        front++;
+        rear++;
+        arrq[rear] = val;
+        return;
+    }
+    else if(front == (rear+1)%adjList->vertex){
+        printf("queue is filled");
+        return;
+        
+    }
+    else{
+        rear = (rear+1)%adjList->vertex;
+        arrq[rear]= val;
+    }
+    return;
+    
+}
+
+void deque(){
+    if(front == -1){
+        printf("arr is already empty");
+        return ;
+    }
+    else if(front == rear){
+        
+        front = -1;
+        rear = -1;
+        return ;
+    }
+    else{
+       
+        
+        front = (front+1)%adjList->vertex;
+        
+        return;
+        
+        
+        
+    }
+    
+    
+}
+
+
+
+
+void bfs()
+{
+    arrq = (int *)malloc(adjList->vertex * sizeof(int));
+
+   int* visited = (int *)malloc(adjList->vertex * sizeof(int));
+   
+    for (int i = 0; i < adjList->vertex; i++)
+    {
+        visited[i] = 0;
+    }
+    printf("\n");
+
+    int verno;
+    printf("enter the vertexno\n");
+    scanf("%d", &verno);
+
+    enqueue(verno);
+    visited[verno] = 1;
+    printf("\n");
+
+    while (front != -1)
+    {
+
+        int curr = arrq[front];
+        printf("%d->", curr);
+        struct Node *currNode = adjList->arr[curr];
+        while (currNode != NULL)
+        {
+            if (visited[currNode->val] != 1)
+            {
+                enqueue(currNode->val);
+                visited[currNode->val] = 1;
+                currNode = currNode->nextLink;
+            }
+            else{
+                currNode = currNode->nextLink;
+            }
+        }
+
+        deque();
+    }
+    return;
+}
+void dfs(int verno, int visited[]){
+    printf("%d->",verno);
+    visited[verno] = 1;
+    
+    struct Node *currNode = adjList->arr[verno];
+    while(currNode != NULL){
+        if(visited[currNode->val] != 1){
+            dfs(currNode->val, visited);
+        }
+        else{
+            currNode = currNode->nextLink;
+        }
+    }
+    
+    
+    
+    
+}
+void dfsfunc(){
+  int visited[adjList->vertex];
+     for(int i = 0; i < adjList->vertex; i++){
+         visited[i] = 0;
+     }
+     printf("\n");
+    
+    int verno;
+    printf("enter the vertexno\n");
+    scanf("%d",&verno);
+     dfs(verno, visited);
+    return;
+    
+}
+
+
+
+int main()
+{
+      printf("create Graph\n");
+      CreateGraph();
+    
+    
+   
+    
+   printf("\n1. Search a node.\n2. Insert a node in the graph.\n3. Insert an edge in the graph\n4. Delete a node from the graph\n5. Apply DFS on the graph\n6. Apply BFS on the graph ");
+   
+   int n;
+   printf("enter the value to perform operation\n");
+   scanf("%d",&n);
+   
+   int val;
+   switch(n){
+       case 1:
+       search();
+       break;
+       
+       case 2:
+       insertNode();
+       break;
+       
+       case 3:
+       insertEdge();
+       break;
+       
+       case 4:
+       deleteNode();
+       break;
+       
+       case 5:
+       dfsfunc();
+       break;
+       
+       case 6:
+       bfs(); 
+       
+       default :
+       printf("you entered the wrong no");
+       
+       
+   }
+   
+  
+     
+
+    return 0;
+}
