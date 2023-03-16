@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+#define MAX_SIZE  6
+
+int stack[MAX_SIZE];
+int ptr = -1;
+
+void push(int val){
+    if(ptr == MAX_SIZE - 1 ){
+        printf("stack is already full");
+        return;
+    }
+    ptr++;
+    stack[ptr] = val;
+}
+
+int pop(){
+    if(ptr == -1){
+        printf("stack is already empty");
+        return 0;
+    }
+    int val = stack[ptr];
+    ptr--;
+    return val;
+}
+
+int  IsEmptyStack(){
+    if(ptr == -1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int  IsFullStack(){
+    if(ptr == MAX_SIZE -1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+    
+}
+int top(){
+    return stack[ptr];
+    
+}
+
+  
+
+int size(){
+    return ptr+1;
+}
+
+
+
+
+
+int main()
+{
+   
+   int n;
+   
+   push(4);
+   push(8);
+   push(1);
+   push(5);
+   
+   
+   printf("\n 1. pop()\n 2. top()\n 3. size\n 4. IsEmptyStack()\n 5. IsFullStack()\n ");
+   
+   printf("enter the value to perform operation\n");
+   scanf("%d",&n);
+   int val;
+   switch(n){
+       case 1:
+        
+       val = pop();
+       printf("poped element %d\n", val);
+       break;
+       
+       case 2:
+        
+       val = top();
+       printf("element at the top %d\n", val);
+       break;
+       
+       case 3:
+       
+       val = size();
+       printf("size element is %d\n",val);
+       break;
+       
+       case 4:
+       
+       val =  IsEmptyStack();
+       if(val == 1){
+           printf("stack is empty , returning %d\n", val);
+       }
+       else{
+           printf("stack is not empty , returning %d\n", val);
+       }
+       
+       break;
+       
+       
+       case 5:
+       
+       val =  IsFullStack();
+       if(val == 1){
+           printf("stack is full , returning %d\n", val);
+       }
+       else{
+           printf("stack is not full , returning %d\n", val);
+       }
+       
+       break;
+       
+       default :
+       printf("you entered the wrong no");
+       
+       
+   }
+   
+
+    return 0;
+}
