@@ -292,7 +292,7 @@ void dfsfunc(){
 
 
 
-int main()
+Void main()
 {   
     printf("create Graph\n");
     adjMatrix = CreateGraph();
@@ -336,7 +336,7 @@ int main()
    
      
 
-    return 0;
+    
 }
 
 
