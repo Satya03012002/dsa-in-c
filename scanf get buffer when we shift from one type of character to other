@@ -1,0 +1,56 @@
+#include<stdio.h>
+int main()
+{
+	float num1,num2,res;
+	char choice,gu;
+
+
+	printf(" enter two numbers \n");
+
+     	scanf("%f %f",&num1,&num2);
+
+	scanf("%c",&gu); //The problem with above code is scanf() reads an integer and leaves a newline character in buffer. So fgets() only reads newline and the string 'test' is ignored by the program.
+		//so to absorb the new line we just write a new scanf 
+	printf(" enter your choice.\n");
+
+	printf(" enter A for addition.\n");
+
+	printf(" enter B for substraction.\n");
+
+	printf(" enter C for division.\n");
+
+	printf(" enter D for multiplication.\n");
+	scanf("%c",&choice);
+
+			switch(choice)
+	{
+		case 'A':
+			res = num1+num2;
+			printf("\n addition of %f and %f is %f",num1,num2,res);
+			break;
+
+		case 'B':
+			res = num1-num2;
+			printf("\n sub of %f and %f is %f", num1,num2,res);
+			break;
+			
+		case 'C':
+			res = num1/num2;
+			printf("\n division of %f and %f is %f",num1,num2,res);
+			break;
+
+		default:
+			printf("not a valid choice");
+
+	}	
+
+
+
+
+
+
+					
+	
+
+	return 0;
+}
