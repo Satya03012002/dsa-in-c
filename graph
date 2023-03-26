@@ -1,0 +1,270 @@
+#include <stdio.h>
+ struct Node{
+        int val;
+        int next_node;
+    };
+
+
+
+
+
+int stop = 0;
+int Left(int i){
+    return 2*i+1;
+}
+int Right(int i){
+    return 2*i+2;
+}
+int parent(int i){
+    return i/2;
+}
+
+void swap( struct Node arrq[], int min, int i){
+     struct Node temp = arrq[i];
+    arrq[i] = arrq[min];
+    arrq[min] = temp;
+}
+
+
+
+void MinHeapify(struct Node arrq[], int i, int len){
+    
+    printf("hello\n");
+    
+  
+    
+    
+    int min = i;
+    int l = Left(i);
+    int r = Right(i);
+    
+    if( l < len && arrq[l].val < arrq[min].val){
+        min = l;
+        
+    }
+    if(r < len && arrq[r].val < arrq[min].val){
+        min = r;
+        
+    }
+    
+    if(min != i){
+        swap(arrq, min, i);
+        MinHeapify(arrq, min, len);
+    }else{
+         return;
+    }
+    
+    
+    
+   
+   
+    
+    
+}
+
+
+
+
+
+
+int size= -1;
+
+
+
+void enqueue(struct Node arrq[], int val, int next_node){ // address of a node that we want to put in queueen
+
+
+      printf("\n enqueue, val - %d next_node - %d", val , next_node);
+    
+    if(size == -1){
+        size++;
+        arrq[size].val = val;
+        arrq[size].next_node = next_node;
+        
+        
+        return;
+    }else{
+        size++;
+        arrq[size].val = val;
+        arrq[size].next_node = next_node;
+        int i = size;
+        while(i > 0){
+            
+            
+            if(arrq[i].val < arrq[parent(i)].val){
+                swap(arrq, i, parent(i));
+            }
+            i = i/2;
+        }
+         
+    }
+   
+    
+    // printf("value is %d\n",arrq[size-1].val);
+    
+}
+
+int deque(struct Node arrq[], int vertex){
+    
+  
+    if(size == -1){
+        stop = -1;
+        
+        printf("arr is already empty\n");
+        return 0 ;
+    }
+   
+    else{
+        
+        
+       printf("\n deqq\n");
+       int k = arrq[size].val;
+         swap(arrq, 0, size );
+         size--;
+         MinHeapify( arrq, 0, size);
+         
+         return k ;
+        
+        
+        
+    }
+    
+    
+}
+
+
+
+
+int main()
+{
+    
+    int vertex;
+    printf("enter the size of vertex\n");
+    scanf("%d",&vertex);
+    
+    int arr[vertex][vertex];
+   
+    int edge;
+    printf("enter the no. of edges\n");
+    scanf("%d",&edge);
+    
+     for(int i = 0; i < edge; i++){
+        for(int j = 0; j < edge; j++){
+            arr[i][j] = 0;
+        }
+    }
+    
+    
+    int startVertex;
+    int endVertex;
+    int distance;
+    
+    
+    for(int i = 0; i < edge; i++){
+        printf("enter the startVertex\n");
+        scanf("%d",&startVertex);
+        printf("enter the endVertex\n");
+        scanf("%d",&endVertex);
+        
+        printf("enter the distance\n");
+        scanf("%d",&distance);
+        
+        arr[startVertex][endVertex] = distance;
+         arr[endVertex][startVertex] = distance;
+         
+    }
+    
+    printf("given matrix is\n");
+    
+    for(int i = 0; i < vertex; i++){
+        
+        for(int j = 0; j < vertex; j++){
+            
+            printf(" %d ", arr[i][j]);
+        
+      }
+      printf("\n");
+        
+    }
+    
+   
+   struct Node arrq[vertex];
+    
+    
+    
+    int start;
+    printf("enter the starting vertex\n");
+    scanf("%d",&start);
+    
+   
+    
+    
+    
+    int visitarr[vertex];
+    for(int i = 0; i < vertex; i++){
+        visitarr[i] = 0;
+        
+    };
+    
+   
+    
+    
+   int cost = 0;
+   int x = 0;
+    
+    while(stop != -1){
+        
+        for(int i = 0; i < vertex; i++){
+            
+            if(visitarr[i] == 0){
+                x = -1;
+            }
+         
+        }
+        
+        
+        if(x == 0){
+            break;
+        }
+      
+    
+        visitarr[start] = 1;
+        
+        for(int i = 0 ; i < vertex; i++){
+             
+            if(visitarr[i] == 0){
+                  
+                 if(arr[start][i] != 0){
+                    
+                     visitarr[i] = 1;
+                     enqueue( arrq,  arr[start][i],  i);
+                         
+                  }
+                
+            }
+        
+        
+        
+       }
+      
+   
+        
+          printf("cost -  %d\n",cost);
+      
+        
+        int k = deque(arrq , vertex);
+         cost += k;
+      
+        
+        
+       
+       
+        
+    }
+    
+    printf("cost is %d\n", cost);
+    
+   
+    return 0;
+}
+
