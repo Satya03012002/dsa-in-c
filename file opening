@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+int main()
+{
+    char num[34];
+    FILE *ptr = NULL;
+    ptr = fopen("satya.txt","r");
+    fscanf(ptr,"%s",num);
+    fclose(ptr);
+    printf("%c",num);
+    fclose(ptr);
+
+    return 0;
+}
