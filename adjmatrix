@@ -340,6 +340,239 @@ Void main()
 }
 
 
+//##################################################################
+
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+C#, VB, Perl, Swift, Prolog, Javascript, Pascal, HTML, CSS, JS
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+/******************************************************************************
+
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+C#, VB, Perl, Swift, Prolog, Javascript, Pascal, HTML, CSS, JS
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Graph{
+    int vertex;
+    int edge;
+    int **arr;
+};
+struct Graph* adjMatrix = NULL;
+
+struct Graph* insert (){
+    
+     adjMatrix = (struct Graph*)malloc(sizeof(struct Graph));
+   printf("enter the no. of vertex\n");
+   scanf("%d",&adjMatrix->vertex);
+   printf("adjMatrix->vertex = %d\n", adjMatrix->vertex);
+   
+   printf("enter the no. of edge\n");
+   scanf("%d",&adjMatrix->edge);
+   printf("adjMatrix->edge = %d\n", adjMatrix->edge);
+   
+   (adjMatrix->arr) = (int**)malloc(((adjMatrix->vertex))*sizeof(int*));
+   
+  for(int i = 0; i < adjMatrix->vertex; i++){
+      adjMatrix->arr[i] = (int*)malloc(((adjMatrix->vertex))*sizeof(int));
+  }
+  for(int j = 0; j < adjMatrix->vertex; j++){
+       for(int k = 0; k < adjMatrix->vertex; k++){
+           
+           adjMatrix->arr[j][k] = 0;
+      
+        }
+    }
+    
+    for(int i = 0; i < adjMatrix->edge; i++){
+        printf("enter the startVertex and endVertex\n");
+        int startVertex;
+        int endVertex;
+        scanf("%d%d",&startVertex,&endVertex);
+         adjMatrix->arr[startVertex][endVertex] = 1;
+         adjMatrix->arr[endVertex][startVertex] = 1;
+    }
+   
+  
+  
+  return adjMatrix;
+    
+    
+    
+}
+
+void search(){
+    int vertexNo;
+    printf("enter the no. of vertex you want to search according to array\n");
+    scanf("%d",&vertexNo);
+    
+    for(int i = 0; i < adjMatrix->vertex; i++){
+        if(adjMatrix->arr[vertexNo][i] == 1){
+             printf("%d->",i);
+        }
+       
+    }
+       printf("\n");
+    
+    
+}
+
+void print(){
+    for(int i = 0; i < adjMatrix->vertex; i++){
+        for(int j = 0; j < adjMatrix->vertex; j++){
+            printf("%d ",adjMatrix->arr[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+    return;
+}
+
+void insertNode(){
+    adjMatrix->vertex++;
+   adjMatrix->arr = (int**)realloc( adjMatrix->arr,(adjMatrix->vertex)*sizeof(int*));
+   
+  for(int i = 0; i < adjMatrix->vertex; i++){
+      adjMatrix->arr[i] = (int*)realloc( adjMatrix->arr[i],(adjMatrix->vertex)*sizeof(int));
+  }
+  for(int j = adjMatrix->vertex-1; j < adjMatrix->vertex; j++){
+       for(int k = 0; k < adjMatrix->vertex; k++){
+           
+           adjMatrix->arr[j][k] = 0;
+           adjMatrix->arr[k][j] = 0;
+      
+        }
+    }
+    
+    return;
+}
+
+void insertEdge(){
+    int noOfEdge;
+    int startVertex;
+    int endVertex;
+    printf("enter no of edge you want to insert\n");
+    scanf("%d",&noOfEdge);
+    for(int i = 0; i < noOfEdge; i++){
+        printf("enter startVertex and endVertex\n");
+    scanf("%d%d",&startVertex,&endVertex);
+    
+    if((startVertex < adjMatrix->vertex && startVertex >= 0) && (endVertex < adjMatrix->vertex && endVertex >= 0)){
+        adjMatrix->arr[startVertex][endVertex] = 1;
+        adjMatrix->arr[endVertex][startVertex] = 1;
+    } 
+    }
+    
+    return;
+   
+}
+
+void deleteNode(){
+    
+     int vertexNo;
+    printf("enter the no. of vertex you want to delete according to array\n");
+    scanf("%d",&vertexNo);
+    
+    // adjMatrix->arr[vertexNo] = NULL;
+    
+    for(int i = 0; i <vertexNo; i++){
+        adjMatrix->arr[i][vertexNo] = 0;
+        adjMatrix->arr[vertexNo][i] = 0;
+    }
+    
+}
+void deleteEdge(){
+  int noOfEdge;
+    int startVertex;
+    int endVertex;
+    printf("enter no of edge you want to insert\n");
+    scanf("%d",&noOfEdge);
+    for(int i = 0; i < noOfEdge; i++){
+        printf("enter startVertex and endVertex\n");
+    scanf("%d%d",&startVertex,&endVertex);
+    
+    if((startVertex < adjMatrix->vertex && startVertex >= 0) && (endVertex < adjMatrix->vertex && endVertex >= 0)){
+        adjMatrix->arr[startVertex][endVertex] = 0;
+        adjMatrix->arr[endVertex][startVertex] = 0;
+    } 
+    }
+    return;
+    
+}
+
+int* adjMatrix->arr[adjMatrix->vertex];
+int front = -1;
+int rear = -1;
+
+
+void enqueue(int* address){ // address of a node that we want to put in queue
+    
+    if(front == -1){
+        front++;
+        rear++;
+        adjMatrix->arr[rear] = address;
+        return;
+    }
+    else if(front == (rear+1)%adjMatrix->vertex){
+        printf("queue is filled");
+        return;
+        
+    }
+    else{
+        rear = (rear+1)%adjMatrix->vertex;
+        adjMatrix->arr[rear]= address;
+    }
+    
+}
+
+void deque(){
+    if(front == -1){
+        printf("arr is already empty");
+        return ;
+    }
+    else if(front == rear){
+        
+        front = -1;
+        rear = -1;
+        return ;
+    }
+    else{
+       
+        
+        front = (front+1)%adjMatrix->vertex;
+        
+        return;
+        
+        
+        
+    }
+    
+    
+}
+
+int bfs(){
+    
+}
+
+int main()
+{
+     adjMatrix = insert();
+     
+
+    return 0;
+}
+
+
 
 
 
